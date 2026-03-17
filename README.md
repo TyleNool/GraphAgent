@@ -1,4 +1,6 @@
-# Chevrolet Manual/FAQ GraphRAG
+![](Technical_Architecture.png)
+
+# Chevrolet Manual/FAQ (GraphRAG)
 
 이 프로젝트는 쉐보레 차량 사용자 질의에 대해 PDF 매뉴얼과 FAQ JSON 데이터를 함께 활용하여 답변, 출처, 대표 이미지, 그리고 추적 가능한 운영 로그를 제공하는 RAG/GraphRAG 기반 진단 시스템이다.
 
