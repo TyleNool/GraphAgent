@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chevy AI — 쉐보레 진단 어시스턴트</title>
+  <meta name="description" content="GraphRAG 기반 쉐보레 차량 진단 AI 챗봇" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/ui/style.css?v=3" />
+</head>
+
+<body>
+  <!-- ===== 헤더 바 ===== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo">⚡</span>
+      <h1>Chevy AI</h1>
+      <span class="badge">GraphRAG</span>
+    </div>
+    <div class="topbar-right">
+      <button id="toggle-sidebar" class="icon-btn" title="근거 패널 열기/닫기">📋</button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- ===== 채팅 영역 ===== -->
+    <main class="chat-area">
+      <!-- 환영 메시지 -->
+      <div id="welcome" class="welcome">
+        <div class="welcome-icon">🚗</div>
+        <h2>쉐보레 AI 진단 어시스턴트</h2>
+        <p>차량 증상을 자유롭게 설명해 주세요.<br />매뉴얼 기반으로 정확한 진단을 도와드립니다.</p>
+        <div class="quick-chips">
+          <button class="chip" data-query="엔진 경고등이 켜졌어요">🔧 엔진 경고등</button>
+          <button class="chip" data-query="브레이크에서 소리가 나요">🛞 브레이크 소음</button>
+          <button class="chip" data-query="에어컨이 시원하지 않아요">❄️ 에어컨 문제</button>
+          <button class="chip" data-query="시동이 잘 안걸려요">🔑 시동 불량</button>
+        </div>
+      </div>
+
+      <!-- 채팅 로그 -->
+      <div id="chat-log" class="chat-log"></div>
+
+      <!-- 타이핑 인디케이터 -->
+      <div id="typing" class="typing-indicator" style="display:none">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <span>분석 중…</span>
+      </div>
+
+      <!-- 입력 폼 -->
+      <form id="chat-form" class="chat-form">
+        <div class="input-row">
+          <select id="model-hint" title="차량 모델 선택">
+            <option value="">모델 자동 감지</option>
+            <option value="말리부">말리부</option>
+            <option value="THE_NEW_말리부">THE_NEW_말리부</option>
+            <option value="ALL_NEW_말리부">ALL_NEW_말리부</option>
+            <option value="카마로">카마로</option>
+            <option value="ALL_NEW_카마로_SS">ALL_NEW_카마로_SS</option>
+            <option value="THE_NEW_카마로_SS">THE_NEW_카마로_SS</option>
+            <option value="ALL_NEW_콜로라도">ALL_NEW_콜로라도</option>
+            <option value="REAL_NEW_콜로라도">REAL_NEW_콜로라도</option>
+            <option value="크루즈">크루즈</option>
+            <option value="All_New_크루즈">All_New_크루즈</option>
+            <option value="BOLT_EV">BOLT_EV</option>
+            <option value="BOLT_EUV">BOLT_EUV</option>
+            <option value="Spark">Spark(스파크)</option>
+            <option value="Spark_EV">Spark_EV(스파크_EV)</option>
+            <option value="The_New_Spark">The_New_Spark(더_뉴_스파크)</option>
+            <option value="TAHOE">TAHOE(타호)</option>
+            <option value="The_New_아베오">The_New_아베오</option>
+            <option value="THE_NEW_트랙스">THE_NEW_트랙스</option>
+            <option value="TRAX_CROSSOVER">TRAX_CROSSOVER(트랙스_크로스오버)</option>
+            <option value="트레일블레이저">트레일블레이저</option>
+            <option value="THE_NEW_트레일블레이저">THE_NEW_트레일블레이저</option>
+            <option value="VOLT">VOLT(볼트)</option>
+            <option value="알페온">알페온</option>
+            <option value="올란도">올란도</option>
+            <option value="이쿼녹스">이쿼녹스</option>
+            <option value="임팔라">임팔라</option>
+            <option value="캡티바">캡티바</option>
+            <option value="트래버스">트래버스</option>
+          </select>
+          <div class="input-wrap">
+            <input id="query" type="text" placeholder="차량의 모델명과 함께 증상을 알려주세요." required autocomplete="off" />
+            <button type="submit" id="send-btn" title="질문 보내기">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <!-- ===== 사이드바 (근거 패널) ===== -->
+    <aside id="sidebar" class="sidebar collapsed">
+      <div class="sidebar-header">
+        <h3>📎 근거 자료</h3>
+        <button id="close-sidebar" class="icon-btn">✕</button>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>🖼️ 근거 페이지 이미지 <span style="font-size:12px;color:#8a95a8">(클릭하면 크게 보기)</span></h4>
+        <div id="image-gallery" class="image-gallery"></div>
+        <p id="top-image-empty" class="empty-hint">아직 근거 이미지가 없습니다</p>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>📌 Top-5 매뉴얼 출처</h4>
+        <ol id="top-sources"></ol>
+        <p id="top-sources-empty" class="empty-hint">질문 후에 매뉴얼 출처가 표시됩니다</p>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>❓ Top-5 FAQ 참고</h4>
+        <ol id="top-faq-sources"></ol>
+        <p id="top-faq-sources-empty" class="empty-hint">질문 후에 FAQ 참고 정보가 표시됩니다</p>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/ui/app.js?v=4"></script>
+</body>
+
+</html>

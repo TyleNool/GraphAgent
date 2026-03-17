@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "15-1-final"
+version = "0.1.0"
+description = "Chevrolet manual-driven GraphRAG troubleshooting agent"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.5.1",
+    "fastapi>=0.116.0",
+    "ipykernel>=7.2.0",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.29",
+    "langchain-cohere>=0.3.0",
+    "langchain-docling>=0.2.0",
+    "langchain-huggingface>=0.3.1",
+    "langchain-neo4j>=0.6.0",
+    "langchain-openai>=0.3.32",
+    "langsmith>=0.7.3",
+    "langgraph>=0.6.6",
+    "neo4j>=5.28.2",
+    "numpy>=2.3.2",
+    "pillow>=11.3.0",
+    "pydantic>=2.11.7",
+    "pymupdf>=1.26.4",
+    "python-dotenv>=1.1.1",
+    "rapidfuzz>=3.14.1",
+    "ruff>=0.15.1",
+    "sentence-transformers>=5.2.2",
+    "uvicorn>=0.35.0",
+]
+
+[project.scripts]
+chevy-troubleshooter = "chevy_troubleshooter.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
