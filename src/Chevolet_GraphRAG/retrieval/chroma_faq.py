@@ -7,7 +7,7 @@ from typing import Any
 
 import chromadb
 
-from chevy_troubleshooter.models import RetrievalItem
+from Chevolet_GraphRAG.models import RetrievalItem
 
 logger = logging.getLogger(__name__)
 

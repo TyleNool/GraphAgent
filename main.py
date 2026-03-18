@@ -1,4 +1,4 @@
-from chevy_troubleshooter.main import main
+from Chevolet_GraphRAG.main import main
 
 
 if __name__ == "__main__":

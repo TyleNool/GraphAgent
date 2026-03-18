@@ -1,3 +1,3 @@
-from chevy_troubleshooter.observability.langsmith_client import LangSmithTracer as LangfuseTracer
+from Chevolet_GraphRAG.observability.langsmith_client import LangSmithTracer as LangfuseTracer
 
 __all__ = ["LangfuseTracer"]

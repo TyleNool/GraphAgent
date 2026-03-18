@@ -5,7 +5,7 @@ from pathlib import Path
 
 import fitz
 
-from chevy_troubleshooter.ingest.catalog import discover_manual_files
+from Chevolet_GraphRAG.ingest.catalog import discover_manual_files
 
 
 def profile_dataset(data_root: Path, include_page_counts: bool = False) -> dict:

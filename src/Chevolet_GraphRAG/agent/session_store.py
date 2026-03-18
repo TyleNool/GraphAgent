@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from threading import Lock
 from typing import Any
 
-from chevy_troubleshooter.models import ChatTurn
+from Chevolet_GraphRAG.models import ChatTurn
 
 
 @dataclass

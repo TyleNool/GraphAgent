@@ -5,11 +5,11 @@ import re
 from collections import defaultdict
 from typing import Any
 
-from chevy_troubleshooter.config import Settings
-from chevy_troubleshooter.models import PageRetrievalResult, RetrievalItem
-from chevy_troubleshooter.neo4j_store import Neo4jStore, RetrievedRecord
-from chevy_troubleshooter.providers import build_chat_model, build_embeddings, build_reranker
-from chevy_troubleshooter.retrieval.chroma_faq import ChromaFAQStore
+from Chevolet_GraphRAG.config import Settings
+from Chevolet_GraphRAG.models import PageRetrievalResult, RetrievalItem
+from Chevolet_GraphRAG.neo4j_store import Neo4jStore, RetrievedRecord
+from Chevolet_GraphRAG.providers import build_chat_model, build_embeddings, build_reranker
+from Chevolet_GraphRAG.retrieval.chroma_faq import ChromaFAQStore
 
 logger = logging.getLogger(__name__)
 

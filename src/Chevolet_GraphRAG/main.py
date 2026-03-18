@@ -7,15 +7,15 @@ from pathlib import Path
 
 import uvicorn
 
-from chevy_troubleshooter.agent import TroubleshootingWorkflow
-from chevy_troubleshooter.config import get_settings
-from chevy_troubleshooter.ingest import (
+from Chevolet_GraphRAG.agent import TroubleshootingWorkflow
+from Chevolet_GraphRAG.config import get_settings
+from Chevolet_GraphRAG.ingest import (
     IngestionPipeline,
     discover_manual_files,
     profile_dataset,
 )
-from chevy_troubleshooter.providers import build_embeddings
-from chevy_troubleshooter.retrieval.chroma_faq import ChromaFAQStore
+from Chevolet_GraphRAG.providers import build_embeddings
+from Chevolet_GraphRAG.retrieval.chroma_faq import ChromaFAQStore
 
 
 def cmd_ingest_data(args: argparse.Namespace) -> None:
@@ -248,7 +248,7 @@ def cmd_evaluate_graphrag(args: argparse.Namespace) -> None:
 
 def cmd_serve_api(args: argparse.Namespace) -> None:
     uvicorn.run(
-        "chevy_troubleshooter.api.app:create_app",
+        "Chevolet_GraphRAG.api.app:create_app",
         host=args.host,
         port=args.port,
         factory=True,

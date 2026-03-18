@@ -6,10 +6,10 @@ from typing import Any
 
 from rapidfuzz import fuzz, process
 
-from chevy_troubleshooter.config import Settings
-from chevy_troubleshooter.ingest.catalog import DataCatalog, infer_vehicle_category
-from chevy_troubleshooter.models import GuardrailDecision
-from chevy_troubleshooter.providers import build_chat_model, invoke_json
+from Chevolet_GraphRAG.config import Settings
+from Chevolet_GraphRAG.ingest.catalog import DataCatalog, infer_vehicle_category
+from Chevolet_GraphRAG.models import GuardrailDecision
+from Chevolet_GraphRAG.providers import build_chat_model, invoke_json
 
 
 OTHER_BRANDS = [

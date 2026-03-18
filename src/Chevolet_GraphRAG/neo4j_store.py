@@ -6,9 +6,9 @@ from typing import Any
 
 from neo4j import Driver, GraphDatabase
 
-from chevy_troubleshooter.config import Settings
-from chevy_troubleshooter.ingest.schema import load_schema_cypher
-from chevy_troubleshooter.models import IngestStats, ParsedManual, build_manual_key
+from Chevolet_GraphRAG.config import Settings
+from Chevolet_GraphRAG.ingest.schema import load_schema_cypher
+from Chevolet_GraphRAG.models import IngestStats, ParsedManual, build_manual_key
 
 
 @dataclass(slots=True)

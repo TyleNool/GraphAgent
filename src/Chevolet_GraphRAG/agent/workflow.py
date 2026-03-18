@@ -6,13 +6,13 @@ from typing import Any, TypedDict
 from langchain_core.messages import HumanMessage
 from langgraph.graph import END, START, StateGraph
 
-from chevy_troubleshooter.config import Settings
-from chevy_troubleshooter.ingest.catalog import DataCatalog
-from chevy_troubleshooter.models import EvidenceSource
-from chevy_troubleshooter.neo4j_store import Neo4jStore
-from chevy_troubleshooter.observability import LangSmithTracer
-from chevy_troubleshooter.providers import build_chat_model
-from chevy_troubleshooter.retrieval import GuardrailEngine, HybridRetriever
+from Chevolet_GraphRAG.config import Settings
+from Chevolet_GraphRAG.ingest.catalog import DataCatalog
+from Chevolet_GraphRAG.models import EvidenceSource
+from Chevolet_GraphRAG.neo4j_store import Neo4jStore
+from Chevolet_GraphRAG.observability import LangSmithTracer
+from Chevolet_GraphRAG.providers import build_chat_model
+from Chevolet_GraphRAG.retrieval import GuardrailEngine, HybridRetriever
 
 
 NEGATIVE_FEEDBACK_PATTERNS = [
@@ -57,6 +57,7 @@ class WorkflowState(TypedDict, total=False):
     top_manual_sources: list[dict[str, Any]]
     top_faq_sources: list[dict[str, Any]]
     top_image_path: str | None
+    faq_priority: bool
 
     answer: str
     confidence: float
@@ -74,10 +75,12 @@ class TroubleshootingWorkflow:
         self.retriever = HybridRetriever(settings, self.store)
         self.guardrails = GuardrailEngine(settings, catalog)
         self.chat_model = build_chat_model(settings)
-        self.tracer = LangfuseTracer(
-            public_key=settings.langfuse_public_key,
-            secret_key=settings.langfuse_secret_key,
-            host=settings.langfuse_base_url,
+        self.tracer = LangSmithTracer(
+            api_key=settings.langsmith_api_key,
+            endpoint=settings.langsmith_endpoint,
+            project_name=settings.langsmith_project,
+            enabled=settings.langsmith_tracing,
+            workspace_id=settings.langsmith_workspace_id,
         )
 
         self.graph = self._build_graph()
@@ -99,11 +102,12 @@ class TroubleshootingWorkflow:
             "history_text": payload.get("history_text", ""),
             "compact_summary": payload.get("compact_summary", ""),
             "excluded_chunk_ids": payload.get("excluded_chunk_ids", []),
+            "faq_priority": False,
             "debug": {},
         }
 
         with self.tracer.trace(
-            "chevy-troubleshooting-workflow",
+            "Chevolet_GraphRAG-workflow",
             {
                 "session_id": state["session_id"],
                 "query": state["user_query"],
@@ -200,6 +204,7 @@ class TroubleshootingWorkflow:
         state["fallback_category"] = decision.fallback_category
         state["preferred_manual_types"] = decision.preferred_manual_types
         state["prefer_faq"] = decision.prefer_faq
+        state["faq_priority"] = False
         state.setdefault("debug", {})["guardrail"] = decision.model_dump()
 
         if not decision.allow:
@@ -386,6 +391,7 @@ class TroubleshootingWorkflow:
 
         state["answer"] = answer
         state["confidence"] = confidence
+        state["faq_priority"] = bool(prefer_faq and top_faq_sources)
         state["top_manual_sources"] = top_manual_sources
         state["top_faq_sources"] = top_faq_sources
         # Legacy output: top_sources is manual-first for backward compatibility.
@@ -561,7 +567,11 @@ class TroubleshootingWorkflow:
         state.setdefault("top_faq_sources", [])
         state["top_faq_sources"] = state["top_faq_sources"][:5]
         state.setdefault("top_sources", [])
-        state["top_sources"] = state["top_manual_sources"][:5]
+        state.setdefault("faq_priority", False)
+        if state["faq_priority"] and state["top_faq_sources"]:
+            state["top_sources"] = state["top_faq_sources"][:5]
+        else:
+            state["top_sources"] = state["top_manual_sources"][:5]
         state.setdefault("graph_paths", [])
         state["graph_paths"] = state["graph_paths"][:10]
         state.setdefault("confidence", 0.0)

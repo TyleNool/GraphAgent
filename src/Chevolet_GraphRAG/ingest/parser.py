@@ -9,7 +9,7 @@ from pathlib import Path
 
 import fitz
 
-from chevy_troubleshooter.models import (
+from Chevolet_GraphRAG.models import (
     ChunkArtifact,
     ManualFile,
     PageArtifact,

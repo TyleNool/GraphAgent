@@ -9,10 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from chevy_troubleshooter.agent import SessionStore, TroubleshootingWorkflow
-from chevy_troubleshooter.config import get_settings
-from chevy_troubleshooter.ingest.catalog import discover_manual_files
-from chevy_troubleshooter.models import (
+from Chevolet_GraphRAG.agent import SessionStore, TroubleshootingWorkflow
+from Chevolet_GraphRAG.config import get_settings
+from Chevolet_GraphRAG.ingest.catalog import discover_manual_files
+from Chevolet_GraphRAG.models import (
     ChatRequest,
     ChatResponse,
 )
@@ -111,7 +111,7 @@ def create_app() -> FastAPI:
             top_image_path=_to_public_path(result.get("top_image_path"), settings),
             top_manual_sources=result.get("top_manual_sources", result.get("top_sources", [])),
             top_faq_sources=result.get("top_faq_sources", []),
-            top_sources=result.get("top_manual_sources", result.get("top_sources", [])),
+            top_sources=result.get("top_sources", []),
             graph_paths=result.get("graph_paths", []),
             debug=result.get("debug", {}),
         )
@@ -137,7 +137,7 @@ def create_app() -> FastAPI:
         payload = session.last_debug or {}
         return TopSourcesResponse(
             session_id=session_id,
-            top_sources=payload.get("top_manual_sources", payload.get("top_sources", []))[:5],
+            top_sources=payload.get("top_sources", [])[:5],
             top_manual_sources=payload.get("top_manual_sources", payload.get("top_sources", []))[:5],
             top_faq_sources=payload.get("top_faq_sources", [])[:5],
             top_image_path=_to_public_path(payload.get("top_image_path"), settings),

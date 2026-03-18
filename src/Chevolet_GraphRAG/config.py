@@ -111,7 +111,7 @@ def get_settings() -> Settings:
         ),
         langsmith_project=_clean_env(
             "LANGSMITH_PROJECT",
-            _clean_env("LANGCHAIN_PROJECT", "chevy-troubleshooter"),
+            _clean_env("LANGCHAIN_PROJECT", "Chevolet_GraphRAG"),
         ),
         langsmith_tracing=_env_bool("LANGSMITH_TRACING", True),
         langsmith_workspace_id=_clean_env("LANGSMITH_WORKSPACE_ID", ""),

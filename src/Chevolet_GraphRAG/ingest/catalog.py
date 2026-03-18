@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-from chevy_troubleshooter.models import ManualFile
+from Chevolet_GraphRAG.models import ManualFile
 
 
 PDF_SUFFIX = ".pdf"

@@ -1,4 +1,4 @@
-from chevy_troubleshooter.agent.session_store import SessionStore
-from chevy_troubleshooter.agent.workflow import TroubleshootingWorkflow
+from Chevolet_GraphRAG.agent.session_store import SessionStore
+from Chevolet_GraphRAG.agent.workflow import TroubleshootingWorkflow
 
 __all__ = ["SessionStore", "TroubleshootingWorkflow"]

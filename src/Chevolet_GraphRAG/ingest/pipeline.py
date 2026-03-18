@@ -6,12 +6,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-from chevy_troubleshooter.config import Settings
-from chevy_troubleshooter.ingest.catalog import discover_manual_files
-from chevy_troubleshooter.ingest.parser import PdfManualParser
-from chevy_troubleshooter.models import IngestStats, build_manual_key
-from chevy_troubleshooter.neo4j_store import Neo4jStore
-from chevy_troubleshooter.providers import build_embeddings
+from Chevolet_GraphRAG.config import Settings
+from Chevolet_GraphRAG.ingest.catalog import discover_manual_files
+from Chevolet_GraphRAG.ingest.parser import PdfManualParser
+from Chevolet_GraphRAG.models import IngestStats, build_manual_key
+from Chevolet_GraphRAG.neo4j_store import Neo4jStore
+from Chevolet_GraphRAG.providers import build_embeddings
 
 
 DTC_PATTERN = re.compile(r"\b[PCBU][0-9]{4}\b", re.IGNORECASE)

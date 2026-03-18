@@ -178,9 +178,9 @@ def load_dataset(path: Path) -> list[EvalItem]:
 def run_pipeline(dataset_path: Path, output_path: Path, top_k: int = 5,
                  max_items: int | None = None, categories: list[str] | None = None) -> list[RunResult]:
     """데이터셋의 각 항목에 대해 워크플로우를 실행하고 결과를 수집합니다."""
-    from chevy_troubleshooter.agent import TroubleshootingWorkflow
-    from chevy_troubleshooter.config import get_settings
-    from chevy_troubleshooter.ingest import discover_manual_files
+    from Chevolet_GraphRAG.agent import TroubleshootingWorkflow
+    from Chevolet_GraphRAG.config import get_settings
+    from Chevolet_GraphRAG.ingest import discover_manual_files
 
     settings = get_settings()
     catalog = discover_manual_files(settings.data_root)
@@ -674,8 +674,8 @@ def eval_answer_relevancy(results: list[RunResult], use_llm: bool = False) -> di
 
     if use_llm:
         try:
-            from chevy_troubleshooter.config import get_settings
-            from chevy_troubleshooter.providers import build_chat_model
+            from Chevolet_GraphRAG.config import get_settings
+            from Chevolet_GraphRAG.providers import build_chat_model
             settings = get_settings()
             chat_model = build_chat_model(settings)
         except Exception:

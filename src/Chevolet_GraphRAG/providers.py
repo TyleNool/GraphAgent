@@ -11,7 +11,7 @@ from langchain_core.embeddings import Embeddings
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import HumanMessage
 
-from chevy_troubleshooter.config import Settings
+from Chevolet_GraphRAG.config import Settings
 
 logger = logging.getLogger(__name__)
 

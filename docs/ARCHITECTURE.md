@@ -32,7 +32,7 @@ Chunk -[NEXT_STEP]-> Chunk (순서 연결)
 
 전문 검색 인덱스: `chunk_fulltext_idx` (Lucene)
 
-실제 Cypher는 `src/chevy_troubleshooter/cypher/schema.cypher` 참조.
+실제 Cypher는 `src/Chevolet_GraphRAG/cypher/schema.cypher` 참조.
 
 ## 2) LangGraph 워크플로우 (8노드 자가수정 루프)
 
@@ -57,7 +57,7 @@ START → compact_context → guardrail_check
 
 ## 3) Guardrail 혼합 전략
 
-> 파일: `src/chevy_troubleshooter/retrieval/guardrails.py`
+> 파일: `src/Chevolet_GraphRAG/retrieval/guardrails.py`
 
 1차 룰 기반:
 - 타 브랜드 키워드 포함 시 거부 (현대, 기아, 제네시스, 르노, 쌍용, KG, 토요타, 렉서스, 혼다, 닛산, BMW, 벤츠, 아우디, 폭스바겐, Tesla, 테슬라)
@@ -84,7 +84,7 @@ START → compact_context → guardrail_check
 
 ## 4) 하이브리드 검색 (Hybrid Retrieval)
 
-> 파일: `src/chevy_troubleshooter/retrieval/hybrid.py`
+> 파일: `src/Chevolet_GraphRAG/retrieval/hybrid.py`
 
 ### 검색 파이프라인
 
@@ -120,7 +120,7 @@ START → compact_context → guardrail_check
 
 ## 5) Supervisor Review (품질 검증)
 
-> 파일: `src/chevy_troubleshooter/agent/workflow.py` — `_supervisor_review()`
+> 파일: `src/Chevolet_GraphRAG/agent/workflow.py` — `_supervisor_review()`
 
 compose_answer 이후 LLM이 생성된 답변을 5가지 기준으로 검증:
 1. 사용자 질의 의도와의 정합성
@@ -185,7 +185,7 @@ compose_answer 이후 LLM이 생성된 답변을 5가지 기준으로 검증:
 - 페이지 이미지 참조 (PNG 렌더링)
 
 ### ChromaDB (FAQ 데이터)
-> 파일: `src/chevy_troubleshooter/retrieval/chroma_faq.py`
+> 파일: `src/Chevolet_GraphRAG/retrieval/chroma_faq.py`
 
 - 평면 구조: question, answer, category
 - 벡터 유사도 검색
@@ -198,7 +198,7 @@ compose_answer 이후 LLM이 생성된 답변을 5가지 기준으로 검증:
 
 ## 9) 관측성 (Observability)
 
-> 파일: `src/chevy_troubleshooter/observability/langsmith_client.py`
+> 파일: `src/Chevolet_GraphRAG/observability/langsmith_client.py`
 
 - LangSmith 기반 트레이싱
 - 워크플로우 전체를 하나의 trace로 감싸서 실행

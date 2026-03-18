@@ -15,7 +15,7 @@ class LangSmithTracer:
         enabled: bool = True,
         workspace_id: str = "",
     ) -> None:
-        self.project_name = project_name or "chevy-troubleshooter"
+        self.project_name = project_name or "Chevolet_GraphRAG"
         self.enabled = bool(enabled and api_key)
         self._client = None
         self._tracing_context = None
