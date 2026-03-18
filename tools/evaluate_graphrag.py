@@ -65,6 +65,7 @@ from typing import Any
 
 # 프로젝트 루트를 sys.path에 추가
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_EVAL_DATASET = PROJECT_ROOT / "Comprehensive_GraphRAG_Evaluation_Dataset_300.json"
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -1172,7 +1173,11 @@ def main():
 
     # run: 파이프라인 실행
     run_p = sub.add_parser("run", help="Run pipeline on dataset and collect raw results")
-    run_p.add_argument("--dataset", required=True, help="평가 데이터셋 JSON 경로")
+    run_p.add_argument(
+        "--dataset",
+        default=str(DEFAULT_EVAL_DATASET),
+        help=f"평가 데이터셋 JSON 경로 (기본값: {DEFAULT_EVAL_DATASET.name})",
+    )
     run_p.add_argument("--output", required=True, help="원시 결과 JSON 출력 경로")
     run_p.add_argument("--top-k", type=int, default=5)
     run_p.add_argument("--max-items", type=int, default=None, help="최대 평가 항목 수 (디버그용)")
@@ -1186,7 +1191,11 @@ def main():
 
     # run-and-report: 한번에 실행
     rr_p = sub.add_parser("run-and-report", help="Run pipeline + generate report")
-    rr_p.add_argument("--dataset", required=True)
+    rr_p.add_argument(
+        "--dataset",
+        default=str(DEFAULT_EVAL_DATASET),
+        help=f"평가 데이터셋 JSON 경로 (기본값: {DEFAULT_EVAL_DATASET.name})",
+    )
     rr_p.add_argument("--output", required=True, help="최종 리포트 JSON")
     rr_p.add_argument("--raw-output", default=None, help="원시 결과도 별도 저장")
     rr_p.add_argument("--top-k", type=int, default=5)

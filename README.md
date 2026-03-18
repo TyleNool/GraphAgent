@@ -543,10 +543,11 @@ uv run python -m Chevolet_GraphRAG.main evaluate-graph --queries-file queries.js
 
 ```bash
 uv run python -m Chevolet_GraphRAG.main evaluate-graphrag \
-  --dataset Comprehensive_GraphRAG_Evaluation_Dataset_300.json \
   --output-file eval_report.json --top-k 5 --use-llm
 # 옵션: --max-items N, --categories "cat1,cat2"
 ```
+
+기본 평가셋은 `Comprehensive_GraphRAG_Evaluation_Dataset_300.json`이다. 다른 데이터셋을 쓰려면 `--dataset`으로 덮어쓴다.
 
 ### API 실행
 

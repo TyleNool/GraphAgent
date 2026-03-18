@@ -332,11 +332,13 @@ uv run python -m Chevolet_GraphRAG.main run-graph-session --model "말리부" --
 uv run python -m Chevolet_GraphRAG.main evaluate-graph --queries-file queries.json --output-file report.json
 
 # 5-Category 종합 평가
-uv run python -m Chevolet_GraphRAG.main evaluate-graphrag --dataset eval_300.json --output-file eval_report.json --use-llm
+uv run python -m Chevolet_GraphRAG.main evaluate-graphrag --output-file eval_report.json --use-llm
 
 # API 서버
 uv run python -m Chevolet_GraphRAG.main serve-api --host 0.0.0.0 --port 8000
 ```
+
+기본 평가셋은 `Comprehensive_GraphRAG_Evaluation_Dataset_300.json`이며, 필요하면 `--dataset`으로 다른 JSON을 지정한다.
 
 ---
 

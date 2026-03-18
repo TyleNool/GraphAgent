@@ -17,6 +17,9 @@ from Chevolet_GraphRAG.ingest import (
 from Chevolet_GraphRAG.providers import build_embeddings
 from Chevolet_GraphRAG.retrieval.chroma_faq import ChromaFAQStore
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_GRAPHRAG_EVAL_DATASET = PROJECT_ROOT / "Comprehensive_GraphRAG_Evaluation_Dataset_300.json"
+
 
 def cmd_ingest_data(args: argparse.Namespace) -> None:
     settings = get_settings()
@@ -360,7 +363,11 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.set_defaults(func=cmd_evaluate_graph)
 
     eval5 = sub.add_parser("evaluate-graphrag", help="5-Category GraphRAG evaluation")
-    eval5.add_argument("--dataset", required=True, help="평가 데이터셋 JSON")
+    eval5.add_argument(
+        "--dataset",
+        default=str(DEFAULT_GRAPHRAG_EVAL_DATASET),
+        help=f"평가 데이터셋 JSON (기본값: {DEFAULT_GRAPHRAG_EVAL_DATASET.name})",
+    )
     eval5.add_argument("--output-file", required=True, help="평가 리포트 JSON 출력")
     eval5.add_argument("--top-k", type=int, default=5)
     eval5.add_argument("--max-items", type=int, default=None, help="최대 평가 항목 수")

@@ -1,6 +1,6 @@
 # 프로젝트 실행 흐름 (Execution Flow)
 
-> **Chevrolet Data-Centric Troubleshooting Agent** — 쉐보레 차량 취급설명서 PDF와 FAQ 데이터를 파싱·임베딩하여 Neo4j + ChromaDB에 적재하고, LangGraph 자가수정 루프를 통해 진단 답변을 생성하는 GraphRAG 에이전트의 전체 실행 흐름입니다.
+> **GraphAgent** — 쉐보레 차량 취급설명서 PDF와 FAQ 데이터를 파싱·임베딩하여 Neo4j + ChromaDB에 적재하고, LangGraph 자가수정 루프를 통해 진단 답변을 생성하는 GraphRAG 에이전트의 전체 실행 흐름입니다.
 
 ---
 
@@ -22,19 +22,17 @@
 
 ```
 ┌──────────────┐    ┌───────────────┐    ┌──────────────┐    ┌──────────────────┐
-│  PDF 매뉴얼   │ -> │  Ingest 파이프 │ -> │   Neo4j DB   │ <- │  Hybrid 검색     │
-│  (data/)     │    │  라인         │    │  (GraphRAG)  │    │ (벡터+키워드+FAQ) │
-└──────────────┘    └───────────────┘    └──────────────┘    └──────────────────┘
-                                                                     │
-┌──────────────┐    ┌───────────────┐    ┌──────────────┐            │
-│  FAQ JSON    │ -> │  FAQ Ingest   │ -> │  ChromaDB    │ <──────────┘
-│ (data/FAQ/)  │    │  파이프라인    │    │  (FAQ 벡터)  │
-└──────────────┘    └───────────────┘    └──────────────┘
-                                                │
-                    ┌───────────────┐    ┌──────┴───────┐
-                    │  LangGraph    │ <- │  Guardrail   │
-                    │  워크플로우    │    │  Engine      │
-                    │  (8노드 DAG)  │    └──────────────┘
+│  PDF 매뉴얼   │ -> │  Ingest 파이프 │ -> │   Neo4j DB   │ -> │                  │
+│  (data/)     │    │  라인          │    │  (GraphRAG)  │    │                  │
+└──────────────┘    └───────────────┘    └──────────────┘    │                  │
+┌──────────────┐    ┌───────────────┐    ┌──────────────┐    │                  │
+│  FAQ JSON    │ -> │  FAQ Ingest   │ -> │  ChromaDB    │ -> │    Hybrid 검색    │
+│ (data/FAQ/)  │    │  파이프라인     │    │  (FAQ 벡터)  │    │  (벡터+키워드+FAQ) │
+└──────────────┘    └───────────────┘    └──────────────┘    │                  │
+                    ┌───────────────┐    ┌──────────────┐    │                  │
+                    │  LangGraph    │ <- │  Guardrail   │ <- │                  │
+                    │  워크플로우     │    │  Engine      │    │                  │
+                    │  (8노드 DAG)   │    └──────────────┘    └──────────────────┘
                     └──────┬────────┘
                            │
                ┌───────────▼───────────┐
@@ -59,14 +57,14 @@
 ### 루트 `main.py`
 
 ```python
-from chevy_troubleshooter.main import main
+from Chevolet_GraphRAG.main import main
 if __name__ == "__main__":
     main()
 ```
 
 단순히 패키지 내부의 `main()` 함수를 호출하는 래퍼입니다.
 
-### `src/chevy_troubleshooter/main.py`
+### `src/Chevolet_GraphRAG/main.py`
 
 `argparse`를 사용하여 **8개 서브커맨드**를 등록합니다:
 
@@ -86,7 +84,7 @@ if __name__ == "__main__":
 ## 3. Phase A: 매뉴얼 데이터 적재 (ingest-data)
 
 ```bash
-uv run python -m chevy_troubleshooter.main ingest-data --data-root data --init-schema
+uv run python -m Chevolet_GraphRAG.main ingest-data --data-root data --init-schema
 ```
 
 ### Step A-1: 설정 로드 (`config.py`)
@@ -204,11 +202,11 @@ Model -[HAS_CHUNK]-> Chunk (직접 연결)
 ## 4. Phase B: FAQ 데이터 적재 (ingest-faq)
 
 ```bash
-uv run python -m chevy_troubleshooter.main ingest-faq \
+uv run python -m Chevolet_GraphRAG.main ingest-faq \
   --faq-path data/FAQ/chevrolet_faq_target_data.json --reset
 ```
 
-> 파일: `src/chevy_troubleshooter/retrieval/chroma_faq.py`
+> 파일: `src/Chevolet_GraphRAG/retrieval/chroma_faq.py`
 
 ### Step B-1: FAQ JSON 로드
 
@@ -251,11 +249,11 @@ FAQ 문서 리스트 → build_embeddings() → 벡터 리스트 → ChromaDB up
 
 ```bash
 # 단건 질의
-uv run python -m chevy_troubleshooter.main run-graph-once \
+uv run python -m Chevolet_GraphRAG.main run-graph-once \
   --query "엔진 경고등이 켜지고 시동이 불안정함" --model "말리부" --top-k 5
 
 # API 서버
-uv run python -m chevy_troubleshooter.main serve-api --host 0.0.0.0 --port 8000
+uv run python -m Chevolet_GraphRAG.main serve-api --host 0.0.0.0 --port 8000
 ```
 
 ### 질의 처리 전체 흐름
@@ -265,41 +263,41 @@ uv run python -m chevy_troubleshooter.main serve-api --host 0.0.0.0 --port 8000
     │
     ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                    TroubleshootingWorkflow (8노드 DAG)                    │
+│                    Chevolet_GraphRAG Workflow (8노드 DAG)                 |
 │                                                                          │
-│  ┌───────────────┐                                                      │
-│  │compact_context│ ← 대화 이력이 길면 LLM으로 요약 (8000자 초과 시)       │
-│  └──────┬────────┘                                                      │
-│         ▼                                                               │
-│  ┌───────────────┐     거부 → ┌──────────┐                              │
-│  │guardrail_check│ ─────────> │ finalize │ → "처리 불가" 응답             │
-│  └──────┬────────┘            └──────────┘                              │
-│         │ 허용                                                           │
-│         ▼                                                               │
-│  ┌────────────────┐                                                     │
-│  │retrieve_hybrid │ ← Neo4j(벡터+키워드) + ChromaDB(FAQ) + 리랭킹        │
-│  └──────┬─────────┘                                                     │
-│         ▼                                                               │
-│  ┌────────────────┐                                                     │
-│  │compose_answer  │ ← LLM으로 근거 기반 점검 절차/FAQ 답변 생성           │
-│  └──────┬─────────┘                                                     │
-│         ▼                                                               │
-│  ┌───────────────────┐                                                  │
-│  │supervisor_review  │ ← LLM으로 답변 품질 검증 (PASS/REVISE 판정)       │
-│  └──────┬────────────┘                                                  │
-│         ▼                                                               │
-│  ┌──────────────────┐     재질의 필요 → ┌───────────────┐                │
-│  │evaluate_feedback │ ──────────────> │ rewrite_query │                │
-│  └──────┬───────────┘                 └──────┬────────┘                │
-│         │ 종료                                │ (retrieve_hybrid        │
-│         ▼                                    │  로 루프백)              │
-│  ┌──────────┐ ◄──────────────────────────────┘                          │
-│  │ finalize │                                                           │
-│  └──────────┘                                                           │
-│         │                                                               │
-│         ▼                                                               │
-│  최종 응답: answer + confidence + top_image_path                         │
-│           + top_manual_sources + top_faq_sources                        │
+│  ┌───────────────┐                                                       │
+│  │compact_context│ ← 대화 이력이 길면 LLM으로 요약 (8000자 초과 시)           │
+│  └──────┬────────┘                                                       │
+│         ▼                                                                │
+│  ┌───────────────┐      거부 → ┌──────────┐                               │
+│  │guardrail_check│ ─────────> │ finalize │ → "처리 불가" 응답              │
+│  └──────┬────────┘            └──────────┘                               │
+│         │ 허용                                                            │
+│         ▼                                                                │
+│  ┌────────────────┐                                                      │
+│  │retrieve_hybrid │ ← Neo4j(벡터+키워드) + ChromaDB(FAQ) + 리랭킹           │
+│  └──────┬─────────┘                                                      │
+│         ▼                                                                │
+│  ┌────────────────┐                                                      │
+│  │compose_answer  │ ← LLM으로 근거 기반 점검 절차/FAQ 답변 생성               │
+│  └──────┬─────────┘                                                      │
+│         ▼                                                                │
+│  ┌───────────────────┐                                                   │
+│  │supervisor_review  │ ← LLM으로 답변 품질 검증 (PASS/REVISE 판정)          │
+│  └──────┬────────────┘                                                   │
+│         ▼                                                                │
+│  ┌──────────────────┐     재질의 필요 → ┌───────────────┐                  │
+│  │evaluate_feedback │ ──────────────> │ rewrite_query │                  │
+│  └──────┬───────────┘                 └──────┬────────┘                  │
+│         │ 종료                                │ (retrieve_hybrid          │
+│         ▼                                    │  로 루프백)                │
+│  ┌──────────┐ ◄──────────────────────────────┘                           │
+│  │ finalize │                                                            │
+│  └──────────┘                                                            │
+│         │                                                                │
+│         ▼                                                                │
+│  최종 응답: answer + confidence + top_image_path                          │
+│           + top_manual_sources + top_faq_sources                         │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -307,7 +305,7 @@ uv run python -m chevy_troubleshooter.main serve-api --host 0.0.0.0 --port 8000
 
 ## 6. LangGraph 워크플로우 상세
 
-> 파일: `src/chevy_troubleshooter/agent/workflow.py`
+> 파일: `src/Chevolet_GraphRAG/agent/workflow.py`
 
 ### 6-1. compact_context — 대화 이력 압축
 
@@ -317,7 +315,7 @@ uv run python -m chevy_troubleshooter.main serve-api --host 0.0.0.0 --port 8000
 
 ### 6-2. guardrail_check — 가드레일 검증
 
-> 파일: `src/chevy_troubleshooter/retrieval/guardrails.py`
+> 파일: `src/Chevolet_GraphRAG/retrieval/guardrails.py`
 
 **2단계 혼합 가드레일**:
 
@@ -347,7 +345,7 @@ uv run python -m chevy_troubleshooter.main serve-api --host 0.0.0.0 --port 8000
 
 ### 6-3. retrieve_hybrid — 하이브리드 검색
 
-> 파일: `src/chevy_troubleshooter/retrieval/hybrid.py`
+> 파일: `src/Chevolet_GraphRAG/retrieval/hybrid.py`
 
 **3가지 소스에서 병렬 검색 실행**:
 
@@ -433,7 +431,7 @@ GPT 프롬프트 → 한국어 점검 절차 + 이유 + 근거 경로 요약
 
 ### 6-5. supervisor_review — 답변 품질 검증
 
-> 파일: `src/chevy_troubleshooter/agent/workflow.py` — `_supervisor_review()`
+> 파일: `src/Chevolet_GraphRAG/agent/workflow.py` — `_supervisor_review()`
 
 compose_answer 이후 LLM이 생성된 답변을 **5가지 기준**으로 검증합니다:
 
@@ -498,7 +496,7 @@ compose_answer 이후 LLM이 생성된 답변을 **5가지 기준**으로 검증
 
 ### 관측성 — LangSmith 연동
 
-> 파일: `src/chevy_troubleshooter/observability/langsmith_client.py`
+> 파일: `src/Chevolet_GraphRAG/observability/langsmith_client.py`
 
 - 워크플로우 전체를 하나의 **LangSmith trace**로 감싸서 실행합니다.
 - trace 시작 시 `session_id`, `query` 를 기록하고, 종료 시 `confidence`, `retry_count`, `allow` 를 이벤트로 기록합니다.
@@ -513,7 +511,7 @@ compose_answer 이후 LLM이 생성된 답변을 **5가지 기준**으로 검증
 ### FastAPI 서버 (`api/app.py`)
 
 ```bash
-uv run python -m chevy_troubleshooter.main serve-api --port 8000
+uv run python -m Chevolet_GraphRAG.main serve-api --port 8000
 ```
 
 | 엔드포인트 | 메서드 | 설명 |
@@ -557,7 +555,7 @@ uv run python -m chevy_troubleshooter.main serve-api --port 8000
 ### ingest-faq — FAQ 데이터 적재
 
 ```bash
-uv run python -m chevy_troubleshooter.main ingest-faq \
+uv run python -m Chevolet_GraphRAG.main ingest-faq \
   --faq-path data/FAQ/chevrolet_faq_target_data.json --reset
 ```
 
@@ -567,7 +565,7 @@ uv run python -m chevy_troubleshooter.main ingest-faq \
 ### profile-data — 데이터 프로파일링
 
 ```bash
-uv run python -m chevy_troubleshooter.main profile-data --data-root data --include-page-counts
+uv run python -m Chevolet_GraphRAG.main profile-data --data-root data --include-page-counts
 ```
 
 - 적재 없이 데이터 구조만 파악: 모델 수, 매뉴얼 수, 유형별 분포, 모델×유형 매트릭스
@@ -576,7 +574,7 @@ uv run python -m chevy_troubleshooter.main profile-data --data-root data --inclu
 ### run-graph-session — 대화형 세션
 
 ```bash
-uv run python -m chevy_troubleshooter.main run-graph-session --model 말리부 --top-k 5
+uv run python -m Chevolet_GraphRAG.main run-graph-session --model 말리부 --top-k 5
 ```
 
 - 터미널에서 대화형으로 질의/피드백을 반복하는 세션 모드
@@ -586,7 +584,7 @@ uv run python -m chevy_troubleshooter.main run-graph-session --model 말리부 -
 ### evaluate-graph — 간이 QA 배치 평가
 
 ```bash
-uv run python -m chevy_troubleshooter.main evaluate-graph \
+uv run python -m Chevolet_GraphRAG.main evaluate-graph \
   --queries-file queries.json --output-file report.json --top-k 5
 ```
 
@@ -597,12 +595,13 @@ uv run python -m chevy_troubleshooter.main evaluate-graph \
 ### evaluate-graphrag — 5-Category GraphRAG 종합 평가
 
 ```bash
-uv run python -m chevy_troubleshooter.main evaluate-graphrag \
-  --dataset Comprehensive_GraphRAG_Evaluation_Dataset_300.json \
+uv run python -m Chevolet_GraphRAG.main evaluate-graphrag \
   --output-file eval_report.json --top-k 5 --use-llm
 ```
 
 > 파일: `tools/evaluate_graphrag.py`
+>
+> 기본 평가셋: `Comprehensive_GraphRAG_Evaluation_Dataset_300.json`
 
 **5개 평가 카테고리**:
 1. **Routing & Guardrail** — 질의 검증, 모델 정규화, FAQ/매뉴얼 라우팅 정확도
@@ -623,33 +622,32 @@ uv run python -m chevy_troubleshooter.main evaluate-graphrag \
 | 파일 경로 | 역할 |
 |-----------|------|
 | `main.py` (루트) | 패키지 진입점 래퍼 |
-| `src/chevy_troubleshooter/main.py` | CLI 8개 서브커맨드 정의 |
-| `src/chevy_troubleshooter/config.py` | 환경변수 → `Settings` 데이터클래스 |
-| `src/chevy_troubleshooter/models.py` | Pydantic 데이터 모델 정의 |
-| `src/chevy_troubleshooter/providers.py` | LLM/Embedding/Reranker 빌더 + `SafeEmbeddings` 래퍼 |
-| `src/chevy_troubleshooter/neo4j_store.py` | Neo4j CRUD + 벡터/키워드 검색 쿼리 |
-| `src/chevy_troubleshooter/cypher/schema.cypher` | Neo4j 스키마 DDL (제약조건+인덱스) |
-| `src/chevy_troubleshooter/ingest/__init__.py` | ingest 패키지 공개 인터페이스 |
-| `src/chevy_troubleshooter/ingest/catalog.py` | PDF 탐색 + 차종/유형 분류 |
-| `src/chevy_troubleshooter/ingest/parser.py` | PDF 파싱 (PyMuPDF + Docling + OCR) |
-| `src/chevy_troubleshooter/ingest/pipeline.py` | 파싱→임베딩→적재→엔티티추출 파이프라인 |
-| `src/chevy_troubleshooter/ingest/profiler.py` | 데이터셋 프로파일링 유틸리티 |
-| `src/chevy_troubleshooter/ingest/schema.py` | Cypher 스키마 파일 로드 유틸리티 |
-| `src/chevy_troubleshooter/retrieval/__init__.py` | retrieval 패키지 공개 인터페이스 |
-| `src/chevy_troubleshooter/retrieval/guardrails.py` | 룰+LLM 혼합 가드레일 + 모델 매칭 + FAQ 의도 감지 |
-| `src/chevy_troubleshooter/retrieval/hybrid.py` | 벡터+키워드 하이브리드 검색 + RRF 융합 + 리랭킹 |
-| `src/chevy_troubleshooter/retrieval/chroma_faq.py` | ChromaDB FAQ 벡터 저장소 (적재+검색) |
-| `src/chevy_troubleshooter/agent/__init__.py` | agent 패키지 공개 인터페이스 |
-| `src/chevy_troubleshooter/agent/workflow.py` | LangGraph 8노드 자가수정 워크플로우 (Supervisor 포함) |
-| `src/chevy_troubleshooter/agent/session_store.py` | 인메모리 세션 대화 이력 관리 |
-| `src/chevy_troubleshooter/api/app.py` | FastAPI 서버 (5 API 엔드포인트 + 정적 서빙) |
-| `src/chevy_troubleshooter/observability/__init__.py` | observability 패키지 인터페이스 |
-| `src/chevy_troubleshooter/observability/langsmith_client.py` | LangSmith trace/event 관측성 |
-| `src/chevy_troubleshooter/observability/langfuse_client.py` | LangSmithTracer → LangfuseTracer 호환 별칭 |
-| `src/chevy_troubleshooter/evaluate_retriever.py` | 검색 평가 유틸리티 |
+| `src/Chevolet_GraphRAG/main.py` | CLI 8개 서브커맨드 정의 |
+| `src/Chevolet_GraphRAG/config.py` | 환경변수 → `Settings` 데이터클래스 |
+| `src/Chevolet_GraphRAG/models.py` | Pydantic 데이터 모델 정의 |
+| `src/Chevolet_GraphRAG/providers.py` | LLM/Embedding/Reranker 빌더 + `SafeEmbeddings` 래퍼 |
+| `src/Chevolet_GraphRAG/neo4j_store.py` | Neo4j CRUD + 벡터/키워드 검색 쿼리 |
+| `src/Chevolet_GraphRAG/cypher/schema.cypher` | Neo4j 스키마 DDL (제약조건+인덱스) |
+| `src/Chevolet_GraphRAG/ingest/__init__.py` | ingest 패키지 공개 인터페이스 |
+| `src/Chevolet_GraphRAG/ingest/catalog.py` | PDF 탐색 + 차종/유형 분류 |
+| `src/Chevolet_GraphRAG/ingest/parser.py` | PDF 파싱 (PyMuPDF + Docling + OCR) |
+| `src/Chevolet_GraphRAG/ingest/pipeline.py` | 파싱→임베딩→적재→엔티티추출 파이프라인 |
+| `src/Chevolet_GraphRAG/ingest/profiler.py` | 데이터셋 프로파일링 유틸리티 |
+| `src/Chevolet_GraphRAG/ingest/schema.py` | Cypher 스키마 파일 로드 유틸리티 |
+| `src/Chevolet_GraphRAG/retrieval/__init__.py` | retrieval 패키지 공개 인터페이스 |
+| `src/Chevolet_GraphRAG/retrieval/guardrails.py` | 룰+LLM 혼합 가드레일 + 모델 매칭 + FAQ 의도 감지 |
+| `src/Chevolet_GraphRAG/retrieval/hybrid.py` | 벡터+키워드 하이브리드 검색 + RRF 융합 + 리랭킹 |
+| `src/Chevolet_GraphRAG/retrieval/chroma_faq.py` | ChromaDB FAQ 벡터 저장소 (적재+검색) |
+| `src/Chevolet_GraphRAG/agent/__init__.py` | agent 패키지 공개 인터페이스 |
+| `src/Chevolet_GraphRAG/agent/workflow.py` | LangGraph 8노드 자가수정 워크플로우 (Supervisor 포함) |
+| `src/Chevolet_GraphRAG/agent/session_store.py` | 인메모리 세션 대화 이력 관리 |
+| `src/Chevolet_GraphRAG/api/app.py` | FastAPI 서버 (5 API 엔드포인트 + 정적 서빙) |
+| `src/Chevolet_GraphRAG/observability/__init__.py` | observability 패키지 인터페이스 |
+| `src/Chevolet_GraphRAG/observability/langsmith_client.py` | LangSmith trace/event 관측성 |
+| `src/Chevolet_GraphRAG/observability/langfuse_client.py` | LangSmithTracer → LangfuseTracer 호환 별칭 |
 | `tools/evaluate_graphrag.py` | 5-Category GraphRAG 종합 평가 스크립트 |
 | `tools/check_neo4j.py` | Neo4j 연결 확인 유틸리티 |
 | `tools/build_final_presentation.py` | 발표 자료 생성 스크립트 |
-| `src/chevy_troubleshooter/ui_static/index.html` | 챗봇 UI HTML 구조 |
-| `src/chevy_troubleshooter/ui_static/app.js` | 챗봇 UI 로직 (API 호출 + 렌더링) |
-| `src/chevy_troubleshooter/ui_static/style.css` | 챗봇 UI 스타일 |
+| `src/Chevolet_GraphRAG/ui_static/index.html` | 챗봇 UI HTML 구조 |
+| `src/Chevolet_GraphRAG/ui_static/app.js` | 챗봇 UI 로직 (API 호출 + 렌더링) |
+| `src/Chevolet_GraphRAG/ui_static/style.css` | 챗봇 UI 스타일 |
