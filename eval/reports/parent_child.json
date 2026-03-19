@@ -1,0 +1,1015 @@
+{
+  "summary": {
+    "total_items": 300,
+    "category_distribution": {
+      "Guardrail_Positive": 20,
+      "Guardrail_Negative": 20,
+      "Model_Disambiguation": 30,
+      "Manual_Retrieval_PageAligned": 60,
+      "Manual_Retrieval_MultiHop": 30,
+      "FAQ_Retrieval_Pure": 40,
+      "FAQ_Manual_Mixed": 20,
+      "Source_Selection_Hard": 20,
+      "Answer_Grounding": 30,
+      "Confidence_Calibration": 30
+    }
+  },
+  "categories": {
+    "1_routing_guardrail": {
+      "guardrail_accuracy": {
+        "accuracy": 0.9133,
+        "precision": 1.0,
+        "recall": 0.9071,
+        "f1": 0.9513,
+        "confusion": {
+          "tp": 254,
+          "fp": 0,
+          "tn": 20,
+          "fn": 26
+        },
+        "total_evaluated": 300,
+        "errors": [
+          {
+            "id": "GR_POS_014",
+            "type": "false_negative",
+            "question": "기존에 90% 충전 제한에서 이번에 80% 충전 제한으로 최대 충전량을 축소한 이유가 무엇인가요?",
+            "reason": "The query is in Korean and does not specify a Chevrolet model. Without a specific model or a recognized Chevrolet FAQ topic, and given the language mismatch, the request cannot be verified or answered."
+          },
+          {
+            "id": "GR_POS_015",
+            "type": "false_negative",
+            "question": "BYOM에서 호환 가능한 AUX pin",
+            "reason": "Request is about AUX pin compatibility without specifying a Chevrolet model or a recognized FAQ category; model and category are unknown."
+          },
+          {
+            "id": "GR_POS_020",
+            "type": "false_negative",
+            "question": "현재 판매 중인 장애인 차량은 무엇입니까?",
+            "reason": "Request is about vehicles but no Chevrolet model or allowed FAQ category specified; fallback category unknown."
+          },
+          {
+            "id": "FAQ_PURE_002",
+            "type": "false_negative",
+            "question": "기존에 90% 충전 제한에서 이번에 80% 충전 제한으로 최대 충전량을 축소한 이유가 무엇인가요? 적용 대상과 조건을 같이 알려주세요",
+            "reason": "The query is about charging limits but no Chevrolet model or relevant FAQ category is specified, and the fallback category is unknown."
+          },
+          {
+            "id": "FAQ_PURE_003",
+            "type": "false_negative",
+            "question": "BYOM에서 호환 가능한 AUX pin 고객 안내 문구처럼 간단히 정리해주세요",
+            "reason": "Request is in Korean and does not specify a Chevrolet model or a general Chevrolet FAQ topic; unable to verify compatibility or provide support."
+          },
+          {
+            "id": "FAQ_PURE_008",
+            "type": "false_negative",
+            "question": "현재 판매 중인 장애인 차량은 무엇입니까? 예외 사항이 있으면 함께 적어주세요",
+            "reason": "The query is about currently sold disabled vehicles, which is not a Chevrolet brand FAQ topic and no specific Chevrolet model or category is provided."
+          },
+          {
+            "id": "FAQ_PURE_009",
+            "type": "false_negative",
+            "question": "유로5 디젤 엔진 장착 차량 운행 중에 DPF 재생 알림등이 점등됩니다. DPF가 어떤 내용인가요?",
+            "reason": "The query is about a diesel engine DPF system, but no Chevrolet model or relevant FAQ category is specified, and the fallback category is unknown."
+          },
+          {
+            "id": "FAQ_PURE_012",
+            "type": "false_negative",
+            "question": "소프트웨어 업데이트를 하면 어떤 점이 달라지나요?",
+            "reason": "The query is about software update benefits but lacks a specific Chevrolet model or a recognized FAQ category; no fallback category available."
+          },
+          {
+            "id": "FAQ_PURE_013",
+            "type": "false_negative",
+            "question": "BYOM에서 호환 가능한 USB 용량",
+            "reason": "The query is about BYOM USB capacity compatibility, which is an infotainment support topic, but no Chevrolet model or category is specified and fallback category is unknown."
+          },
+          {
+            "id": "FAQ_PURE_015",
+            "type": "false_negative",
+            "question": "저공해 증명서 재발급 철차 및 장소를 알고싶습니다.",
+            "reason": "Request is not related to Chevrolet brand or its FAQs."
+          },
+          {
+            "id": "FAQ_PURE_018",
+            "type": "false_negative",
+            "question": "장애인용 가격은 면세 가격인가요?",
+            "reason": "The query is about pricing for disabled persons, which is not covered under Chevrolet brand FAQ categories such as membership, points, purchase, website/account, warranty, recall, or infotainment support, and no specific Chevrolet model or fallback category is provided."
+          },
+          {
+            "id": "FAQ_PURE_021",
+            "type": "false_negative",
+            "question": "고객이 직접 목표 충전 레벨 설정 방법을 통해 최대 충전 용량을 80%로 변경할 수는 없나요? 반드시 정비 네트워크로 입고하여 소프트웨어 업데이",
+            "reason": "The query is about a vehicle-specific feature (charging level setting) but no Chevrolet model is specified and fallback category is unknown, so cannot verify or provide support."
+          },
+          {
+            "id": "FAQ_PURE_027",
+            "type": "false_negative",
+            "question": "장애인 중 면세 가능한 등급은 어떻게 되나요?",
+            "reason": "The query is in Korean and does not specify a Chevrolet vehicle model or a Chevrolet brand FAQ topic; also, the fallback category is unknown."
+          },
+          {
+            "id": "FAQ_PURE_028",
+            "type": "false_negative",
+            "question": "시동 키가 돌아가지 않을때(핸들잠김) 해결방법은 무엇입니까?",
+            "reason": "No Chevrolet model specified and query is about a vehicle issue without a general Chevrolet FAQ topic; cannot verify without model or relevant category."
+          },
+          {
+            "id": "FAQ_PURE_036",
+            "type": "false_negative",
+            "question": "몇대까지 장애인 차량 구입 가능한지요? (한 가족에 장애인 2인일 경우 등)",
+            "reason": "The query is about vehicle purchase eligibility related to disability, which is not a Chevrolet brand FAQ topic and no specific Chevrolet model or category is provided."
+          },
+          {
+            "id": "FAQ_PURE_037",
+            "type": "false_negative",
+            "question": "정비 예약은 어떻게 해야하나요?",
+            "reason": "The query is about maintenance reservation but no Chevrolet model or relevant FAQ category is specified; fallback category is unknown."
+          },
+          {
+            "id": "SRC_SEL_002",
+            "type": "false_negative",
+            "question": "기존에 90% 충전 제한에서 이번에 80% 충전 제한으로 최대 충전량을 축소한 이유가 무엇인가요? 관련 정책만 알려주세요",
+            "reason": "The query is about a charging limit policy, which is not covered under Chevrolet brand FAQ categories such as membership, points, purchase, website/account, warranty, recall, or infotainment support. No specific Chevrolet model or fallback category is provided."
+          },
+          {
+            "id": "SRC_SEL_003",
+            "type": "false_negative",
+            "question": "BYOM에서 호환 가능한 AUX pin 관련 정책만 알려주세요",
+            "reason": "The query is about BYOM AUX pin compatibility policy, which is not a Chevrolet brand FAQ topic and no specific Chevrolet model or recognized category is provided."
+          },
+          {
+            "id": "SRC_SEL_008",
+            "type": "false_negative",
+            "question": "현재 판매 중인 장애인 차량은 무엇입니까? 관련 정책만 알려주세요",
+            "reason": "Request is about disabled vehicles and related policies, which is not a Chevrolet brand FAQ topic or specific vehicle model inquiry."
+          },
+          {
+            "id": "SRC_SEL_009",
+            "type": "false_negative",
+            "question": "유로5 디젤 엔진 장착 차량 운행 중에 DPF 재생 알림등이 점등됩니다. DPF가 어떤 내용인가요? 관련 정책만 알려주세요",
+            "reason": "The query is about DPF (Diesel Particulate Filter) related information, which is not a Chevrolet brand FAQ topic such as membership, points, purchase, website/account, warranty, recall, or infotainment support. Also, no specific Chevrolet model or fallback category is provided."
+          }
+        ]
+      },
+      "routing_accuracy": {
+        "accuracy": 0.878,
+        "correct": 223,
+        "total": 254,
+        "errors": [
+          {
+            "id": "GR_POS_016",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "브라우저에 상관없이 온라인 샵을 이용할 수 있나요?"
+          },
+          {
+            "id": "MAN_PAGE_013",
+            "expected": "manual",
+            "actual_priority": "faq",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "올뉴 말리부 보증 범위와 보증서 확인 방법을 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_026",
+            "expected": "manual",
+            "actual_priority": "faq",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "올뉴 카마로 SS 보증 범위와 보증서 확인 방법을 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_039",
+            "expected": "manual",
+            "actual_priority": "faq",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "올뉴 콜로라도 보증 범위와 보증서 확인 방법을 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_052",
+            "expected": "manual",
+            "actual_priority": "faq",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "올뉴 크루즈 보증 범위와 보증서 확인 방법을 알려주세요"
+          },
+          {
+            "id": "FAQ_PURE_004",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "브라우저에 상관없이 온라인 샵을 이용할 수 있나요? 예외 사항이 있으면 함께 적어주세요"
+          },
+          {
+            "id": "FAQ_PURE_019",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": true,
+            "question": "내비게이션 업그레이드 방법은 무엇입니까?"
+          },
+          {
+            "id": "FAQ_PURE_022",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "Divx Code 등록하는 방법 ?"
+          },
+          {
+            "id": "FAQ_PURE_031",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": true,
+            "question": "차량에서 무전기를 사용 시 MyLink 와의 간섭"
+          },
+          {
+            "id": "FAQ_PURE_039",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": true,
+            "question": "최대 충전량을 80%로 제한하면 기존보다 더 자주 배터리를 충전해야 하는데 고전압 배터리 성능에 영향은 없나요?"
+          },
+          {
+            "id": "FAQ_PURE_040",
+            "expected": "faq",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": true,
+            "question": "Bluetooth music을 듣던 중 Incoming/Outgoing Call 전화통화를 한 후에 previous 음악이 바로 재생되지 않는 "
+          },
+          {
+            "id": "MIX_002",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "올뉴 카마로 SS BYOM에서 호환 가능한 USB 용량 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_003",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "올뉴 콜로라도 Divx Code 등록하는 방법 ? 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_004",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "올뉴 크루즈 차량에서 무전기를 사용 시 MyLink 와의 간섭 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_009",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "스파크 폰북 다운로드 실패(Android OS phone) 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_010",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "스파크 EV Audio 재생 순서 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_011",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "타호 Bluetooth 음악 재생 모드에서, 빨리감기/되감기/랜덤재생/반복재생 실패하는 경우 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_012",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "더뉴 말리부 지원가능한 폰임에도 불구하고 Blue Tooth Pairing 실패 하는 경우 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "MIX_013",
+            "expected": "mixed",
+            "actual_priority": "faq",
+            "has_manual": false,
+            "has_faq": true,
+            "question": "더뉴 카마로 SS 일부 폰의 경우 Bluetooth 연결시, Mylink 접근시에 비밀번호를 누르시오 라는 Pop-up 이 뜹니다. 그리고 인포"
+          },
+          {
+            "id": "MIX_014",
+            "expected": "mixed",
+            "actual_priority": "manual",
+            "has_manual": true,
+            "has_faq": false,
+            "question": "더뉴 트랙스 BYOM에서 호환 가능한 AUX pin 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          }
+        ]
+      },
+      "entity_resolution": {
+        "model_family_accuracy": 1.0,
+        "model_family_total": 207,
+        "candidate_hit_rate": 0.9903,
+        "candidate_total": 207,
+        "errors": []
+      }
+    },
+    "2_graph_document_retrieval": {
+      "document_retrieval_recall": {
+        "hit_at_5": 0.8543,
+        "mrr": 0.7083,
+        "total": 254,
+        "errors": [
+          {
+            "id": "GR_POS_005",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_운전_작동.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf"
+            ],
+            "question": "올뉴 카마로 SS 시동과 기본 주행 조작 순서를 알려주세요"
+          },
+          {
+            "id": "GR_POS_008",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_서비스_정비.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "chevrolet_faq_target_data.json",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf"
+            ],
+            "question": "올뉴 카마로 SS 정기 점검 항목과 기본 정비 절차를 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_020",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_개요.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_인포테인먼트.pdf"
+            ],
+            "question": "올뉴 카마로 SS 기본 특징과 차량 개요를 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_022",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_서비스_정비.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_차량관리.pdf"
+            ],
+            "question": "올뉴 카마로 SS 정기 점검 항목과 기본 정비 절차를 알려주세요 조작 순서 위주로 정리해주세요"
+          },
+          {
+            "id": "MAN_PAGE_024",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_보관.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf"
+            ],
+            "question": "올뉴 카마로 SS 장기 보관 전에 확인할 사항을 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_033",
+            "expected": [
+              "data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_개요.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_인포테인먼트.pdf"
+            ],
+            "question": "올뉴 콜로라도 기본 특징과 차량 개요를 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_036",
+            "expected": [
+              "data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_기술제원.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_차량관리.pdf",
+              "/home/ser/15-1._Final/data/REAL_NEW_콜로라도/REAL_NEW_콜로라도_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_차량관리.pdf",
+              "/home/ser/15-1._Final/data/REAL_NEW_콜로라도/REAL_NEW_콜로라도_차량관리.pdf"
+            ],
+            "question": "올뉴 콜로라도 제원과 규격 정보를 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_039",
+            "expected": [
+              "data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_보증서.pdf"
+            ],
+            "actual_top5": [
+              "chevrolet_faq_target_data.json",
+              "/home/ser/15-1._Final/data/REAL_NEW_콜로라도/REAL_NEW_콜로라도_보증서.pdf",
+              "/home/ser/15-1._Final/data/REAL_NEW_콜로라도/REAL_NEW_콜로라도_보증서.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_차량관리.pdf"
+            ],
+            "question": "올뉴 콜로라도 보증 범위와 보증서 확인 방법을 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_046",
+            "expected": [
+              "data/All_New_크루즈/All_New_크루즈_개요.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_인포테인먼트.pdf"
+            ],
+            "question": "올뉴 크루즈 기본 특징과 차량 개요를 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_049",
+            "expected": [
+              "data/All_New_크루즈/All_New_크루즈_기술제원.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_차량관리.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_차량관리.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_차량관리.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_차량관리.pdf"
+            ],
+            "question": "올뉴 크루즈 제원과 규격 정보를 알려주세요"
+          },
+          {
+            "id": "MAN_PAGE_060",
+            "expected": [
+              "data/BOLT_EUV/BOLT_EUV_개요.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/BOLT_EUV/BOLT_EUV_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/BOLT_EUV/BOLT_EUV_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/BOLT_EUV/BOLT_EUV_인포테인먼트.pdf",
+              "chevrolet_faq_target_data.json",
+              "/home/ser/15-1._Final/data/BOLT_EUV/BOLT_EUV_인포테인먼트.pdf"
+            ],
+            "question": "볼트 EUV 기본 특징과 차량 개요를 알려주세요"
+          },
+          {
+            "id": "MAN_HOP_004",
+            "expected": [
+              "data/ALL_NEW_말리부/ALL_NEW_말리부_보관.pdf",
+              "data/ALL_NEW_말리부/ALL_NEW_말리부_차량관리.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_운전_작동.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_운전_작동.pdf"
+            ],
+            "question": "올뉴 말리부 차량 관련 의미와 보관 점검/조치 순서를 함께 알려주세요"
+          },
+          {
+            "id": "MAN_HOP_012",
+            "expected": [
+              "data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_보관.pdf",
+              "data/ALL_NEW_콜로라도/ALL_NEW_콜로라도_차량관리.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/REAL_NEW_콜로라도/REAL_NEW_콜로라도_차량관리.pdf",
+              "/home/ser/15-1._Final/data/REAL_NEW_콜로라도/REAL_NEW_콜로라도_차량관리.pdf"
+            ],
+            "question": "올뉴 콜로라도 차량 관련 의미와 보관 점검/조치 순서를 함께 알려주세요"
+          },
+          {
+            "id": "MAN_HOP_016",
+            "expected": [
+              "data/All_New_크루즈/All_New_크루즈_보관.pdf",
+              "data/All_New_크루즈/All_New_크루즈_차량관리.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_계기판_조절장치.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_운전_작동.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_계기판_조절장치.pdf",
+              "/home/ser/15-1._Final/data/All_New_크루즈/All_New_크루즈_운전_작동.pdf"
+            ],
+            "question": "올뉴 크루즈 차량 관련 의미와 보관 점검/조치 순서를 함께 알려주세요"
+          },
+          {
+            "id": "FAQ_PURE_022",
+            "expected": [
+              "data/FAQ/chevrolet_faq_target_data.json"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/크루즈/크루즈_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/Spark/SPARK_MyLink.pdf",
+              "/home/ser/15-1._Final/data/Spark_EV/SPARK_EV_MyLink.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/크루즈/크루즈_인포테인먼트.pdf"
+            ],
+            "question": "Divx Code 등록하는 방법 ?"
+          },
+          {
+            "id": "MIX_017",
+            "expected": [
+              "data/FAQ/chevrolet_faq_target_data.json",
+              "data/The_New_Spark/THE_NEW_SPARK_인포테인먼트.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/Spark/SPARK_MyLink.pdf",
+              "/home/ser/15-1._Final/data/Spark/SPARK_MyLink.pdf",
+              "/home/ser/15-1._Final/data/Spark_EV/SPARK_EV_MyLink.pdf",
+              "/home/ser/15-1._Final/data/Spark_EV/SPARK_EV_MyLink.pdf",
+              "/home/ser/15-1._Final/data/Spark/SPARK_MyLink.pdf"
+            ],
+            "question": "더뉴 Spark 차량에서 무전기를 사용 시 MyLink 와의 간섭 그리고 인포테인먼트 관련 안내도 같이 알려주세요"
+          },
+          {
+            "id": "SRC_SEL_012",
+            "expected": [
+              "data/ALL_NEW_말리부/ALL_NEW_말리부_서비스_정비.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_차량관리.pdf"
+            ],
+            "question": "올뉴 말리부 정기 점검 항목과 기본 정비 절차를 알려주세요 정책성 정보인지 차량 사용 정보인지 먼저 판단해주세요"
+          },
+          {
+            "id": "SRC_SEL_014",
+            "expected": [
+              "data/ALL_NEW_말리부/ALL_NEW_말리부_보증서.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_개요.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_말리부/THE_NEW_말리부_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_인포테인먼트.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_말리부/ALL_NEW_말리부_개요.pdf"
+            ],
+            "question": "올뉴 말리부 보증 범위와 보증서 확인 방법을 알려주세요 가장 적절한 출처를 우선해서 답해주세요"
+          },
+          {
+            "id": "SRC_SEL_016",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_서비스_정비.pdf"
+            ],
+            "actual_top5": [
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/THE_NEW_카마로_SS/THE_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf",
+              "/home/ser/15-1._Final/data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_차량관리.pdf"
+            ],
+            "question": "올뉴 카마로 SS 정기 점검 항목과 기본 정비 절차를 알려주세요 우선 참고해야 할 자료 기준으로 설명해주세요"
+          },
+          {
+            "id": "SRC_SEL_018",
+            "expected": [
+              "data/ALL_NEW_카마로_SS/ALL_NEW_카마로_SS_보증서.pdf"
+            ],
+            "actual_top5": [],
+            "question": "올뉴 카마로 SS 보증 범위와 보증서 확인 방법을 알려주세요 정책성 정보인지 차량 사용 정보인지 먼저 판단해주세요"
+          }
+        ]
+      },
+      "graph_completeness": {
+        "entity_hit_rate": 0.9855,
+        "entity_recall_avg": 0.8482,
+        "entity_total": 207,
+        "multihop_completeness": 0.7667,
+        "multihop_total": 30
+      },
+      "hierarchy_alignment": {
+        "page_hit_at_5": 0.2947,
+        "page_total": 207,
+        "manual_type_match": 0.8502,
+        "type_total": 207,
+        "should_not_manual_violation_rate": 0.1277,
+        "should_not_manual_total": 47
+      }
+    },
+    "3_generation_grounding": {
+      "faithfulness": {
+        "groundedness_pass_rate": 1.0,
+        "groundedness_total": 254,
+        "hallucination_rate": 0.0,
+        "hallucination_total": 207,
+        "violations": []
+      },
+      "answer_relevancy": {
+        "fact_coverage_avg": 0.6138,
+        "fact_coverage_total": 254
+      },
+      "fact_coverage": {
+        "overall_coverage": 0.6687,
+        "overall_covered": 559,
+        "overall_total": 836,
+        "per_category": {
+          "Guardrail_Positive": {
+            "coverage": 0.7857,
+            "covered": 44,
+            "total": 56,
+            "sample_missing": [
+              {
+                "id": "GR_POS_002",
+                "fact": "재순환"
+              },
+              {
+                "id": "GR_POS_003",
+                "fact": "라디오"
+              },
+              {
+                "id": "GR_POS_005",
+                "fact": "운전"
+              },
+              {
+                "id": "GR_POS_006",
+                "fact": "히터"
+              },
+              {
+                "id": "GR_POS_007",
+                "fact": "라디오"
+              }
+            ]
+          },
+          "Model_Disambiguation": {
+            "coverage": 0.8529,
+            "covered": 87,
+            "total": 102,
+            "sample_missing": [
+              {
+                "id": "MODEL_DIS_003",
+                "fact": "트렁크"
+              },
+              {
+                "id": "MODEL_DIS_004",
+                "fact": "트렁크"
+              },
+              {
+                "id": "MODEL_DIS_005",
+                "fact": "트렁크"
+              },
+              {
+                "id": "MODEL_DIS_006",
+                "fact": "트렁크"
+              },
+              {
+                "id": "MODEL_DIS_007",
+                "fact": "트렁크"
+              }
+            ]
+          },
+          "Manual_Retrieval_PageAligned": {
+            "coverage": 0.823,
+            "covered": 172,
+            "total": 209,
+            "sample_missing": [
+              {
+                "id": "MAN_PAGE_001",
+                "fact": "트렁크"
+              },
+              {
+                "id": "MAN_PAGE_002",
+                "fact": "표시등"
+              },
+              {
+                "id": "MAN_PAGE_003",
+                "fact": "운전"
+              },
+              {
+                "id": "MAN_PAGE_005",
+                "fact": "라디오"
+              },
+              {
+                "id": "MAN_PAGE_006",
+                "fact": "램프"
+              }
+            ]
+          },
+          "Manual_Retrieval_MultiHop": {
+            "coverage": 0.725,
+            "covered": 87,
+            "total": 120,
+            "sample_missing": [
+              {
+                "id": "MAN_HOP_001",
+                "fact": "계기판"
+              },
+              {
+                "id": "MAN_HOP_002",
+                "fact": "블루투스"
+              },
+              {
+                "id": "MAN_HOP_002",
+                "fact": "정비"
+              },
+              {
+                "id": "MAN_HOP_003",
+                "fact": "히터"
+              },
+              {
+                "id": "MAN_HOP_004",
+                "fact": "관리"
+              }
+            ]
+          },
+          "FAQ_Retrieval_Pure": {
+            "coverage": 0.0952,
+            "covered": 4,
+            "total": 42,
+            "sample_missing": [
+              {
+                "id": "FAQ_PURE_001",
+                "fact": "Apple CarPlay 관련 주요 기능에 대해서 아래 링크를 통해서 확인 하실 수 있습니다"
+              },
+              {
+                "id": "FAQ_PURE_004",
+                "fact": "10버전 이하의 인터넷 익스플로러를 사용하실 경우, 온라인 샵 서비스 이용이 원활하지 않을 수 있습니다"
+              },
+              {
+                "id": "FAQ_PURE_004",
+                "fact": "온라인 샵 서비스는 크롬과 마이크로소프트 엣지 브라우저에 최적화되어 있으니 해당 브라우저를 통한 접속을 권장해 드립니다"
+              },
+              {
+                "id": "FAQ_PURE_005",
+                "fact": "자동차 근저당 설정 해지는 할부를 진행한 할부사의 지점을 방문하여 근저당 설정 해지 서류를 받으신 다음에 해당 관청(시청, 구청, 군청)의 차량 등록 사업부의 저당 설정 해지 창구에 제출하시면 됩니다"
+              },
+              {
+                "id": "FAQ_PURE_006",
+                "fact": "쉐보레 정품 SD카드는 인근 쉐보레 정비사업소 또는 위즈빌 네이버 쇼핑몰에서 구입이 가능 합니다"
+              }
+            ]
+          },
+          "FAQ_Manual_Mixed": {
+            "coverage": 0.5,
+            "covered": 40,
+            "total": 80,
+            "sample_missing": [
+              {
+                "id": "MIX_001",
+                "fact": "5Φ Aux jack만 가능"
+              },
+              {
+                "id": "MIX_002",
+                "fact": "FAT 형식 : 2/4/8/16/32 GB exFAT 형식 : 64GB (*Test 완료한 USB형식) USB 지원은 전적으로 Windows CE의 지원가능한 파일 시스템에 따릅니다"
+              },
+              {
+                "id": "MIX_002",
+                "fact": "블루투스"
+              },
+              {
+                "id": "MIX_003",
+                "fact": "만약 Divx코드가 등록되지 않으면 BYOM에서 지원하지 않을 수 있습니다"
+              },
+              {
+                "id": "MIX_003",
+                "fact": "블루투스"
+              }
+            ]
+          },
+          "Source_Selection_Hard": {
+            "coverage": 0.5532,
+            "covered": 26,
+            "total": 47,
+            "sample_missing": [
+              {
+                "id": "SRC_SEL_001",
+                "fact": "Apple CarPlay 관련 주요 기능에 대해서 아래 링크를 통해서 확인 하실 수 있습니다"
+              },
+              {
+                "id": "SRC_SEL_001",
+                "fact": "https://www"
+              },
+              {
+                "id": "SRC_SEL_004",
+                "fact": "10버전 이하의 인터넷 익스플로러를 사용하실 경우, 온라인 샵 서비스 이용이 원활하지 않을 수 있습니다"
+              },
+              {
+                "id": "SRC_SEL_004",
+                "fact": "온라인 샵 서비스는 크롬과 마이크로소프트 엣지 브라우저에 최적화되어 있으니 해당 브라우저를 통한 접속을 권장해 드립니다"
+              },
+              {
+                "id": "SRC_SEL_005",
+                "fact": "자동차 근저당 설정 해지는 할부를 진행한 할부사의 지점을 방문하여 근저당 설정 해지 서류를 받으신 다음에 해당 관청(시청, 구청, 군청)의 차량 등록 사업부의 저당 설정 해지 창구에 제출하시면 됩니다"
+              }
+            ]
+          },
+          "Answer_Grounding": {
+            "coverage": 0.5942,
+            "covered": 41,
+            "total": 69,
+            "sample_missing": [
+              {
+                "id": "ANS_GRD_001",
+                "fact": "표시등"
+              },
+              {
+                "id": "ANS_GRD_003",
+                "fact": "오일"
+              },
+              {
+                "id": "ANS_GRD_003",
+                "fact": "타이어"
+              },
+              {
+                "id": "ANS_GRD_005",
+                "fact": "계기판"
+              },
+              {
+                "id": "ANS_GRD_005",
+                "fact": "표시등"
+              }
+            ]
+          },
+          "Confidence_Calibration": {
+            "coverage": 0.5225,
+            "covered": 58,
+            "total": 111,
+            "sample_missing": [
+              {
+                "id": "CONF_001",
+                "fact": "표시등"
+              },
+              {
+                "id": "CONF_002",
+                "fact": "변속"
+              },
+              {
+                "id": "CONF_004",
+                "fact": "라디오"
+              },
+              {
+                "id": "CONF_005",
+                "fact": "오일"
+              },
+              {
+                "id": "CONF_005",
+                "fact": "타이어"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "4_multimodal_ux": {
+      "image_source_alignment": {
+        "image_source_alignment": 1.0,
+        "alignment_total": 207,
+        "expected_image_page_hit": 0.068,
+        "image_page_total": 206,
+        "errors": []
+      },
+      "confidence_calibration": {
+        "bucket_accuracy": 0.6693,
+        "total": 254,
+        "per_bucket": {
+          "high": {
+            "count": 168,
+            "accuracy": 0.7619,
+            "avg_confidence": 0.7518,
+            "min_confidence": 0.25,
+            "max_confidence": 0.95
+          },
+          "medium": {
+            "count": 76,
+            "accuracy": 0.5132,
+            "avg_confidence": 0.6746,
+            "min_confidence": 0.2,
+            "max_confidence": 0.9053
+          },
+          "low": {
+            "count": 10,
+            "accuracy": 0.3,
+            "avg_confidence": 0.4184,
+            "min_confidence": 0.25,
+            "max_confidence": 0.5886
+          }
+        }
+      }
+    },
+    "5_operational": {
+      "latency": {
+        "p50": 11.61,
+        "p95": 36.959,
+        "mean": 14.06,
+        "min": 0.001,
+        "max": 61.128,
+        "total": 300,
+        "per_category": {
+          "Guardrail_Positive": {
+            "mean": 13.226,
+            "p50": 11.265,
+            "count": 20
+          },
+          "Guardrail_Negative": {
+            "mean": 0.001,
+            "p50": 0.001,
+            "count": 20
+          },
+          "Model_Disambiguation": {
+            "mean": 15.228,
+            "p50": 14.333,
+            "count": 30
+          },
+          "Manual_Retrieval_PageAligned": {
+            "mean": 16.547,
+            "p50": 15.064,
+            "count": 60
+          },
+          "Manual_Retrieval_MultiHop": {
+            "mean": 19.624,
+            "p50": 17.264,
+            "count": 30
+          },
+          "FAQ_Retrieval_Pure": {
+            "mean": 8.61,
+            "p50": 5.581,
+            "count": 40
+          },
+          "FAQ_Manual_Mixed": {
+            "mean": 14.329,
+            "p50": 11.361,
+            "count": 20
+          },
+          "Source_Selection_Hard": {
+            "mean": 15.398,
+            "p50": 14.31,
+            "count": 20
+          },
+          "Answer_Grounding": {
+            "mean": 12.607,
+            "p50": 9.6,
+            "count": 30
+          },
+          "Confidence_Calibration": {
+            "mean": 19.933,
+            "p50": 14.405,
+            "count": 30
+          }
+        }
+      },
+      "cost_per_query": {
+        "avg_cost_per_query_usd": 0.004343,
+        "total_estimated_cost_usd": 1.3029,
+        "total_queries": 300,
+        "note": "Estimated based on GPT-4.1-mini ($0.40/1M in, $1.60/1M out) + Cohere rerank ($2/1K)"
+      },
+      "stability_requery": {
+        "error_rate": 0.0,
+        "requery_rate": 0.0767,
+        "avg_retry_count": 0.143,
+        "max_retry_count": 2,
+        "error_count": 0,
+        "requery_count": 23,
+        "total": 300
+      }
+    }
+  },
+  "scorecard": {
+    "1_routing_guardrail": {
+      "guardrail_accuracy": 0.9133,
+      "guardrail_f1": 0.9513,
+      "routing_accuracy": 0.878,
+      "model_family_accuracy": 1.0
+    },
+    "2_graph_document_retrieval": {
+      "doc_hit_at_5": 0.8543,
+      "doc_mrr": 0.7083,
+      "entity_hit_rate": 0.9855,
+      "page_hit_at_5": 0.2947,
+      "manual_type_match": 0.8502
+    },
+    "3_generation_grounding": {
+      "groundedness_pass_rate": 1.0,
+      "hallucination_rate": 0.0,
+      "fact_coverage": 0.6687
+    },
+    "4_multimodal_ux": {
+      "image_source_alignment": 1.0,
+      "confidence_bucket_accuracy": 0.6693
+    },
+    "5_operational": {
+      "latency_p50_sec": 11.61,
+      "latency_p95_sec": 36.959,
+      "avg_cost_usd": 0.004343,
+      "error_rate": 0.0,
+      "requery_rate": 0.0767
+    }
+  }
+}
