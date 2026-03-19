@@ -225,7 +225,11 @@ def cmd_evaluate_graphrag(args: argparse.Namespace) -> None:
     tools_dir = Path(__file__).resolve().parent.parent.parent / "tools"
     import importlib.util
     spec = importlib.util.spec_from_file_location("evaluate_graphrag", tools_dir / "evaluate_graphrag.py")
+    if spec is None or spec.loader is None:
+        raise RuntimeError("Failed to load tools/evaluate_graphrag.py")
     mod = importlib.util.module_from_spec(spec)
+    import sys
+    sys.modules[spec.name] = mod
     spec.loader.exec_module(mod)
 
     dataset_path = Path(args.dataset).resolve()
