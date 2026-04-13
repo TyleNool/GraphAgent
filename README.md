@@ -1,4 +1,8 @@
-![](Technical_Architecture.png)
+# 프로젝트 아키텍쳐(플로우 차트)
+1. LangGraph 8-Node 워크플로우
+![](Project_Workflow.png)
+2. Data(차량 메뉴얼 PDF, 웹 페이지 FAQ JSON) 처리 파이프라인
+![](Data_PipeLine.png)
 
 # Chevrolet Manual/FAQ (GraphRAG)
 
